@@ -118,6 +118,10 @@ class WordCloud {
     self._layout.rotate(rotation).on("end", self._draw);
     self._layout.start();
   }
+
+  reset() {
+    this.svg.selectAll("text").style("opacity", 1);
+  }
 }
 
 export default WordCloud;

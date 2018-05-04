@@ -1,8 +1,7 @@
 import d3 from "./d3";
 
-
 import WordCloud from "./WordCloud";
-import scatterplot from "./scatterplot";
+import Scatterplot from "./Scatterplot";
 import State from "./State";
 
 function resizeSVG(svg, width, height) {
@@ -110,12 +109,16 @@ async function main() {
   resizeSVG(scatterplotSVG, 800, 560);
 
   // Define state object that is consistent across two views
-  const state = new State(wordCloudSVG, scatterplotSVG);
+  const state = new State();
 
   // Plot the word cloud and scatterplot
   const wordCloud = new WordCloud(wordCloudSVG, data, state);
   wordCloud.draw();
-  scatterplot(scatterplotSVG, data, state);
+  const scatterplot = new Scatterplot(scatterplotSVG, data, state);
+  scatterplot.draw();
+
+  state.setWordCloud(wordCloud);
+  state.setScatterplot(scatterplot);
 
   // Setup interactions
   setResetButton(state);

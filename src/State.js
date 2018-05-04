@@ -1,10 +1,18 @@
 class State {
-  constructor(wordCloud, scatterplot) {
-    this.wordCloud = wordCloud;
-    this.scatterplot = scatterplot;
+  constructor() {
+    this.wordCloud = null;
+    this.scatterplot = null;
     this.state = new Set();
     this.currentElement = null;
     this.locked = false;
+  }
+
+  setWordCloud(wordCloud) {
+    this.wordCloud = wordCloud;
+  }
+
+  setScatterplot(scatterplot) {
+    this.scatterplot = scatterplot;
   }
 
   checkElement(element) {
@@ -34,20 +42,20 @@ class State {
   refresh() {
     const opacity = this.state.size == 0 ? 1 : 0.1;
 
-    this.wordCloud.selectAll("text").style("opacity", opacity);
+    this.wordCloud.svg.selectAll("text").style("opacity", opacity);
 
-    this.wordCloud
+    this.wordCloud.svg
       .selectAll("text")
       .filter(d => this.state.has(d.id))
       .style("opacity", 1)
       .attr("class", "selected");
 
-    this.scatterplot
+    this.scatterplot.svg
       .selectAll("circle")
       .attr("class", "data-point")
       .attr("opacity", opacity);
 
-    this.scatterplot
+    this.scatterplot.svg
       .selectAll("circle")
       .filter(d => this.state.has(d.id))
       .attr("class", "selected");
